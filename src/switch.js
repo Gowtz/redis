@@ -1,25 +1,36 @@
 import Parser from "redis-parser";
-import { store } from "./index.js";
-import { GET, SET, DEL, EXPIRE } from "./key_value.js";
-export const redis_parser= (connection) => {
+import { INCREMENTOR, STORE } from "./dataStore.js";
+import { append, del, expire, get, set } from "./operation/keyValue.js";
+import { decr, incr } from "./operation/incrementor.js";
+export const redis_parser = (connection) => {
   return new Parser({
     returnReply: (reply) => {
       const command = reply[0];
-      switch (command) {
+      switch (command.toLowerCase()) {
         case "ping":
           connection.write("+PONG\r\n");
           break;
-        case "set" || "SET":
-          SET(store, connection, reply);
+        case "set":
+          set(STORE, connection, reply);
           break;
-        case "get" || "GET":
-          GET(store, connection, reply);
+        case "get":
+          get(STORE, connection, reply);
           break;
-        case "del" || "DEL":
-          DEL(store, connection, reply);
+        case "del":
+          del(STORE, connection, reply);
           break;
-        case "expire" || "EXPIRE":
-         EXPIRE(store,connection,reply)
+        case "expire":
+          expire(STORE, connection, reply);
+          break;
+        case "append":
+          append(STORE, connection, reply);
+          break;
+        case "incr":
+          incr(INCREMENTOR,connection, reply);
+          break;
+        case "decr":
+          decr(INCREMENTOR, connection, reply);
+          break;
       }
     },
 
