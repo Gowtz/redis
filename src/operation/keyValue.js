@@ -1,4 +1,6 @@
-export const set = (STORE, connection, reply) => {
+import { STORE } from "../dataStore.js";
+
+export const set = (connection, reply) => {
   if (reply.length === 3) {
     const key = reply[1];
     const value = reply[2];
@@ -11,20 +13,20 @@ export const set = (STORE, connection, reply) => {
   }
 };
 
-export const get = (STORE, connection, reply) => {
+export const get = (connection, reply) => {
   const key = reply[1];
   const value = STORE.get(key);
   if (!value) connection.write("$-1\r\n");
   else connection.write(`$${value.length}\r\n${value}\r\n`);
 };
 
-export const del = (STORE, connection, reply) => {
+export const del = (connection, reply) => {
   const key = reply[1];
   STORE.delete(key);
   connection.write("+OK\r\n");
 };
 
-export const expire = (STORE, connection, reply) => {
+export const expire = (connection, reply) => {
   //Code goes here
   const key = reply[1];
   const time = reply[2] * 1000;
@@ -32,7 +34,7 @@ export const expire = (STORE, connection, reply) => {
   connection.write("+OK\r\n");
 };
 
-export const append = (STORE, connection, reply) => {
+export const append = (connection, reply) => {
   if (reply.length === 3) {
     const key = reply[1];
     const value = reply[2];
@@ -45,4 +47,3 @@ export const append = (STORE, connection, reply) => {
     );
   }
 };
-

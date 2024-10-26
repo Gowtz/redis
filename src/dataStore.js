@@ -1,3 +1,3 @@
 export const STORE = new Map()
-export const QUEUE = new Array()
+export const QUEUE = new Map()
 export const INCREMENTOR  = new Map()

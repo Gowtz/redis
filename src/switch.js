@@ -1,7 +1,7 @@
 import Parser from "redis-parser";
-import { INCREMENTOR, STORE } from "./dataStore.js";
 import { append, del, expire, get, set } from "./operation/keyValue.js";
 import { decr, incr } from "./operation/incrementor.js";
+import { lpop, lpush, rpop, rpush } from "./operation/queue.js";
 export const redis_parser = (connection) => {
   return new Parser({
     returnReply: (reply) => {
@@ -11,26 +11,38 @@ export const redis_parser = (connection) => {
           connection.write("+PONG\r\n");
           break;
         case "set":
-          set(STORE, connection, reply);
+          set(connection, reply);
           break;
         case "get":
-          get(STORE, connection, reply);
+          get(connection, reply);
           break;
         case "del":
-          del(STORE, connection, reply);
+          del(connection, reply);
           break;
         case "expire":
-          expire(STORE, connection, reply);
+          expire(connection, reply);
           break;
         case "append":
-          append(STORE, connection, reply);
+          append(connection, reply);
           break;
         case "incr":
-          incr(INCREMENTOR,connection, reply);
+          incr(connection, reply);
           break;
         case "decr":
-          decr(INCREMENTOR, connection, reply);
+          decr( connection, reply);
           break;
+        case "lpush":
+          lpush(connection,reply)
+        break
+        case "lpop":
+          lpop(connection,reply)
+        break
+        case "rpush":
+          rpush(connection,reply)
+        break
+        case "rpop":
+          rpop(connection,reply)
+        break
       }
     },
 

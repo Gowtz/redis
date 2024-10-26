@@ -1,4 +1,6 @@
-export const incr = (INCREMENTOR, connection, reply) => {
+import { INCREMENTOR } from "../dataStore.js";
+
+export const incr = (connection, reply) => {
   if (reply.length === 2) {
     const key = reply[1];
     const getValue = INCREMENTOR.get(key);
@@ -8,7 +10,7 @@ export const incr = (INCREMENTOR, connection, reply) => {
     } else {
       INCREMENTOR.set(key, "1");
     }
-      connection.write(`+(interger) ${INCREMENTOR.get(key)}\r\n`);
+    connection.write(`+(interger) ${INCREMENTOR.get(key)}\r\n`);
   } else {
     connection.write(
       "+(error) ERR wrong number of arguments for 'incr' command\r\n",
@@ -16,7 +18,7 @@ export const incr = (INCREMENTOR, connection, reply) => {
   }
 };
 
-export const decr = (INCREMENTOR, connection, reply) => {
+export const decr = (connection, reply) => {
   if (reply.length === 2) {
     const key = reply[1];
     const getValue = INCREMENTOR.get(key);
@@ -26,7 +28,7 @@ export const decr = (INCREMENTOR, connection, reply) => {
     } else {
       INCREMENTOR.set(key, "-1");
     }
-      connection.write(`+(interger) ${INCREMENTOR.get(key)}\r\n`);
+    connection.write(`+(interger) ${INCREMENTOR.get(key)}\r\n`);
   } else {
     connection.write(
       "+(error) ERR wrong number of arguments for 'decr' command\r\n",
