@@ -46,3 +46,6 @@
 - rpush
 - lpop
 - rpop
+- hset
+- hget
+- hgetall
