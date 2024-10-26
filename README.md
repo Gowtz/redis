@@ -13,12 +13,24 @@
 ### How to run this server
 
 - Clone this repo
+  ```bash
+  git clone https://github.com/Gowtz/redis
+  ```
 
-- Install dependinces `npm i`
+- Install dependinces
+  ```bash
+  npm i
+  ```
 
-- run the server `npm run start`
+- Run the server
+  ```bash
+  npm run start
+  ```
 
-- Connect from redis-cli `redis-cli -p 8000`
+- Connect from redis-cli
+  ```bash
+  redis-cli -p 8000
+  ```
 
 
 ## Implementation are working
